@@ -48,8 +48,8 @@ ggplot(penguins,aes(x=bill_length_mm,y=flipper_length_mm,color=species))+
 
 Export the scatterplot.
 
-```{r,message=FALSE,warning=FALSE,fig.width=8,fig.height=12}
-ggsave('flipper_length_vs_bill_length.png')
+```{r,message=FALSE,warning=FALSE}
+ggsave('flipper_length_vs_bill_length.png',height=8, width=10)
 ```
 
 # Problem 2
