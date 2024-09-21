@@ -29,7 +29,7 @@ The `penguins` dataset has `r nrow(penguins)` rows and each row vector includes 
 
 The study years of these samples are `r factor(unique(penguins$year))`. There are three species penguins (`r unique(penguins$species)`) included in this dataset and they come from three islands (`r unique(penguins$island)`). 
 
-Regardless of some missing data, the dataset contains `r sum(penguins$sex=='female',na.rm = TRUE)` female penguins and `r sum(penguins$sex=='male',na.rm = TRUE)` male penguins. The mean of the rest four variables are listed as below: 
+Regardless of some missing data, the dataset contains `r sum(penguins$sex=='female',na.rm = TRUE)` female penguins and `r sum(penguins$sex=='male',na.rm = TRUE)` male penguins. The mean values of other four variables are listed as below: 
 
 | bill length(mm) | bill depth(mm) | flipper length(mm) | body mass(g)|
 |:---:|:---:|:---:|:---:|
@@ -38,10 +38,49 @@ Regardless of some missing data, the dataset contains `r sum(penguins$sex=='fema
 
 
 
-```{r,message=FALSE,warning=FALSE}
+```{r,message=FALSE,warning=FALSE, fig.width=8,fig.height==12}
 # load a necessary package
 library(tidyverse)
+# scatterplot for flipper_length vs bill_length
 ggplot(penguins,aes(x=bill_length_mm,y=flipper_length_mm,color=species))+
   geom_point(alpha=.5)
+# save the plot
 ggsave('flipper_length_vs_bill_length.png')
 ```
+
+# Problem 2
+
+```{r}
+set.seed(111)
+df<-tibble(vec_sample=rnorm(10),
+           vec_logic=vec_sample>0,
+           vec_char=c('A','B','C','E','F','11','12','D','133','S'),
+           vec_factor=factor(c('black','white','red','red','black','black','white','red','white','white'),levels=c('black','white','red')))
+df
+```
+**Try to Take the Mean**
+
+- The mean of `vec_sample` is `r mean(pull(df,vec_sample))`;
+- The mean of `vec_logic` is `r mean(pull(df,vec_logic))`;
+- The mean of `vec_char` is `r mean(pull(df,vec_char))`;
+- The mean of `vec_factor` is `r mean(pull(df,vec_factor))`;
+
+
+As shown above, the function `mean()` works on the numeric variable `vec_sample` and the logical variable `vec_logic`. However, it doesn't work on the character variable `vec_char` and factor variable `vec_factor`. 
+
+**Try Function `as.numeric`**
+
+When I try `as.numeric()` function to the logical, character, and factor variables using the following code:
+```{r eval=FALSE}
+as.numeric(pull(df,vec_logic))
+as.numeric(pull(df,vec_char))
+as.numeric(pull(df,vec_factor))
+```
+
+- For logical variable, it converts 'TRUE' to 1 and converts 'FALSE' to 0;
+- For character variable, it turns a non-numeric character like 'A' to NA and turns a numeric character like '12' to the number itself;
+- For factor variable, it returns the integer inherited the priority of the factor levels. In our example, the integer be assigned to 'black','white' and 'red', are 1,2 3 respectively, because the level of factor is 'black','white', 'red'.
+
+
+There is a possible explanation for the results of applying `mean()` to these three types of variables. When I apply function `mean()` to a logical, it will automatically regard the logical variable `vec_logic` as the numeric number `as.numeric(vec_logic)`. However, when applying function `mean()` to the character variable or the factor variable, it can't actually turn them to a numeric number. Therefore, it results to NA when taking the mean of character variable or the factor variable using `mean()`.
+
