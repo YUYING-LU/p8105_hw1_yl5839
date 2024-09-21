@@ -36,15 +36,12 @@ Regardless of some missing data, the dataset contains `r sum(penguins$sex=='fema
 |`r round(mean(penguins$bill_length_mm,na.rm=TRUE),2)`| `r round(mean(penguins$bill_depth_mm,na.rm=TRUE),2)`|`r round(mean(penguins$flipper_length_mm,na.rm=TRUE),2)`| `r round(mean(penguins$body_mass_g,na.rm=TRUE),2)`|
 
 
-
+**Plotting**
 
 ```{r,message=FALSE,warning=FALSE, fig.width=8,fig.height==12}
-# load a necessary package
 library(tidyverse)
-# scatterplot for flipper_length vs bill_length
 ggplot(penguins,aes(x=bill_length_mm,y=flipper_length_mm,color=species))+
   geom_point(alpha=.5)
-# save the plot
 ggsave('flipper_length_vs_bill_length.png')
 ```
 
