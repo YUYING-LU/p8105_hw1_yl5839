@@ -38,10 +38,17 @@ Regardless of some missing data, the dataset contains `r sum(penguins$sex=='fema
 
 **Plotting**
 
+Use `ggplot()` to create a scatterplot of `flipper_length_mm` (y) vs `bill_length_mm` (x).
 ```{r,message=FALSE,warning=FALSE, fig.width=8,fig.height==12}
 library(tidyverse)
 ggplot(penguins,aes(x=bill_length_mm,y=flipper_length_mm,color=species))+
   geom_point(alpha=.5)
+```
+
+
+Export the scatterplot.
+
+```{r,message=FALSE,warning=FALSE,fig.width=8,fig.height=12}
 ggsave('flipper_length_vs_bill_length.png')
 ```
 
